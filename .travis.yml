@@ -1,0 +1,25 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t prijank/react-test -f ./client/Dockerfile.dev ./client
+
+
+script:
+    - docker run prijan/react-test npm test -- --coverage
+
+after_success:
+    - docker build -t prijank/multi-client ./client
+    - docker build -t prijank/multi-nginx ./nginx
+    - docker build -t prijank/multi-server ./server
+    - docker build -t prijank/multi-worker ./worker
+    #Log into Docker CLI
+    - echo "$DOCKER_PASSWORD" |docker login -u "DOCKER_ID" --password-stdin
+
+    #Take the images as push them to Docker Hub
+    - docker push prijank/multi-client
+    - docker push prijank/multi-nginx
+    - docker push prijank/multi-server
+    - docker push prijank/multi-worker
+
