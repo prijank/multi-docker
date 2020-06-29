@@ -7,7 +7,7 @@ before_install:
 
 
 script:
-    - docker run -e CI=true prijan/react-test npm test -- --coverage
+    - docker run -e CI=true prijank/react-test npm test -- --coverage
 
 after_success:
     - docker build -t prijank/multi-client ./client
