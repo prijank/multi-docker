@@ -15,7 +15,7 @@ after_success:
     - docker build -t prijank/multi-server ./server
     - docker build -t prijank/multi-worker ./worker
     #Log into Docker CLI
-    - echo "$DOCKER_PASSWORD" |docker login -u "DOCKER_ID" --password-stdin
+    - echo "$DOCKER_PASSWORD" |docker login -u "$DOCKER_ID" --password-stdin
 
     #Take the images as push them to Docker Hub
     - docker push prijank/multi-client
